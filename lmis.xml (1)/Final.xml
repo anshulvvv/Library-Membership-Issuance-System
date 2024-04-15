@@ -1,0 +1,355 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE nta PUBLIC '-//Uppaal Team//DTD Flat System 1.6//EN' 'http://www.it.uu.se/research/group/darts/uppaal/flat-1_6.dtd'>
+<nta>
+	<declaration>// Place global declarations here.
+
+chan SignIn,CorrectPassword,IncorrectPassword,BuyMemberShip,MemberShipDetails,SignOutUser,SignOut,Gold,Platinum,ValidPIN,TransactionhasCompleted;
+broadcast chan InvalidPin,InsufficientBalance,InitiatePayment,SufficientBalance,TimedOut;
+int x:=0;
+</declaration>
+	<template>
+		<name x="5" y="5">User</name>
+		<declaration>// Place local declarations here.
+</declaration>
+		<location id="id0" x="-654" y="-229">
+			<name x="-680" y="-212">SignsIn</name>
+		</location>
+		<location id="id1" x="-408" y="-365">
+			<name x="-510" y="-407">BoughtMembershipCard</name>
+		</location>
+		<location id="id2" x="-204" y="-458">
+			<name x="-214" y="-492">Au</name>
+		</location>
+		<location id="id3" x="34" y="-382">
+			<name x="-110" y="-390">PaymentGateway</name>
+		</location>
+		<location id="id4" x="-195" y="-297">
+			<name x="-220" y="-280">Pt</name>
+		</location>
+		<location id="id5" x="-357" y="-136">
+			<name x="-467" y="-127">ViewMembershipDetailHistory</name>
+		</location>
+		<location id="id6" x="357" y="-382">
+			<name x="281" y="-416">InsufficientBal</name>
+		</location>
+		<location id="id7" x="-484" y="-229">
+			<name x="-518" y="-272">Signed_In</name>
+		</location>
+		<location id="id8" x="-773" y="-229">
+			<name x="-824" y="-238">Idle</name>
+		</location>
+		<location id="id9" x="-654" y="-229">
+		</location>
+		<location id="id10" x="34" y="-246">
+			<name x="51" y="-246">Validated</name>
+		</location>
+		<location id="id11" x="34" y="-144">
+			<name x="51" y="-153">TransactionCompleted</name>
+		</location>
+		<init ref="id8"/>
+		<transition id="id12">
+			<source ref="id8"/>
+			<target ref="id0"/>
+			<label kind="synchronisation" x="-755" y="-246">SignIn!</label>
+		</transition>
+		<transition id="id13">
+			<source ref="id11"/>
+			<target ref="id8"/>
+			<label kind="synchronisation" x="-662" y="-93">TransactionhasCompleted!</label>
+			<nail x="34" y="-76"/>
+			<nail x="-680" y="-76"/>
+		</transition>
+		<transition id="id14">
+			<source ref="id10"/>
+			<target ref="id11"/>
+			<label kind="synchronisation" x="-127" y="-212">SufficientBalance?</label>
+		</transition>
+		<transition id="id15">
+			<source ref="id3"/>
+			<target ref="id8"/>
+			<label kind="synchronisation" x="-263" y="-552">TimedOut?</label>
+			<nail x="127" y="-382"/>
+			<nail x="127" y="-535"/>
+			<nail x="-773" y="-535"/>
+		</transition>
+		<transition id="id16">
+			<source ref="id10"/>
+			<target ref="id6"/>
+			<label kind="synchronisation" x="136" y="-289">InsufficientBalance?</label>
+		</transition>
+		<transition id="id17">
+			<source ref="id3"/>
+			<target ref="id10"/>
+			<label kind="synchronisation" x="34" y="-331">ValidPIN?</label>
+		</transition>
+		<transition id="id18">
+			<source ref="id5"/>
+			<target ref="id8"/>
+			<label kind="synchronisation" x="-636" y="-153">SignOutUser!</label>
+			<nail x="-654" y="-136"/>
+		</transition>
+		<transition id="id19">
+			<source ref="id6"/>
+			<target ref="id8"/>
+			<label kind="synchronisation" x="-527" y="-25">SignOut!</label>
+			<nail x="357" y="-8"/>
+			<nail x="-722" y="-8"/>
+		</transition>
+		<transition id="id20">
+			<source ref="id9"/>
+			<target ref="id0"/>
+		</transition>
+		<transition id="id21">
+			<source ref="id7"/>
+			<target ref="id5"/>
+			<label kind="synchronisation" x="-510" y="-187">MemberShipDetails!</label>
+			<nail x="-416" y="-178"/>
+		</transition>
+		<transition id="id22">
+			<source ref="id7"/>
+			<target ref="id1"/>
+			<label kind="synchronisation" x="-535" y="-323">BuyMemberShip!</label>
+		</transition>
+		<transition id="id23">
+			<source ref="id0"/>
+			<target ref="id7"/>
+			<label kind="synchronisation" x="-636" y="-246">CorrectPassword?</label>
+		</transition>
+		<transition id="id24">
+			<source ref="id3"/>
+			<target ref="id3"/>
+			<label kind="synchronisation" x="-17" y="-476">InvalidPin?</label>
+			<nail x="68" y="-450"/>
+			<nail x="-8" y="-450"/>
+		</transition>
+		<transition id="id25">
+			<source ref="id2"/>
+			<target ref="id3"/>
+			<label kind="synchronisation" x="-153" y="-450">InitiatePayment!</label>
+		</transition>
+		<transition id="id26">
+			<source ref="id4"/>
+			<target ref="id3"/>
+			<label kind="synchronisation" x="-127" y="-323">InitiatePayment!</label>
+		</transition>
+		<transition id="id27">
+			<source ref="id1"/>
+			<target ref="id4"/>
+			<label kind="synchronisation" x="-348" y="-323">Platinum!</label>
+		</transition>
+		<transition id="id28">
+			<source ref="id1"/>
+			<target ref="id2"/>
+			<label kind="synchronisation" x="-331" y="-442">Gold!</label>
+		</transition>
+		<transition id="id29">
+			<source ref="id0"/>
+			<target ref="id0"/>
+			<label kind="synchronisation" x="-722" y="-314">IncorrectPassword?</label>
+			<nail x="-620" y="-289"/>
+			<nail x="-696" y="-289"/>
+		</transition>
+	</template>
+	<template>
+		<name>Library</name>
+		<location id="id30" x="-1054" y="-620">
+			<name x="-1064" y="-654">Pt</name>
+		</location>
+		<location id="id31" x="-783" y="-685">
+			<name x="-841" y="-714">Authenticated</name>
+		</location>
+		<location id="id32" x="-1054" y="-748">
+			<name x="-1053" y="-777">Au</name>
+		</location>
+		<location id="id33" x="-647" y="-795">
+			<name x="-657" y="-829">MemberShipDetail</name>
+		</location>
+		<location id="id34" x="-977" y="-688">
+			<name x="-1011" y="-722">BoughtMembership</name>
+		</location>
+		<location id="id35" x="-664" y="-600">
+			<name x="-698" y="-634">SigningIN</name>
+		</location>
+		<location id="id36" x="-306" y="-680">
+			<name x="-281" y="-689">Idle</name>
+		</location>
+		<location id="id37" x="-1275" y="-688">
+			<name x="-1285" y="-722">PaymentGateway</name>
+		</location>
+		<init ref="id36"/>
+		<transition id="id38">
+			<source ref="id37"/>
+			<target ref="id36"/>
+			<label kind="synchronisation" x="-935" y="-892">TransactionhasCompleted?</label>
+			<nail x="-1207" y="-875"/>
+			<nail x="-391" y="-875"/>
+		</transition>
+		<transition id="id39">
+			<source ref="id37"/>
+			<target ref="id36"/>
+			<label kind="synchronisation" x="-935" y="-943">InsufficientBalance?</label>
+			<nail x="-1275" y="-926"/>
+			<nail x="-297" y="-926"/>
+		</transition>
+		<transition id="id40">
+			<source ref="id30"/>
+			<target ref="id37"/>
+			<label kind="synchronisation" x="-1232" y="-646">InitiatePayment?</label>
+		</transition>
+		<transition id="id41">
+			<source ref="id37"/>
+			<target ref="id36"/>
+			<label kind="synchronisation" x="-901" y="-1062">TimedOut?</label>
+			<nail x="-1385" y="-1045"/>
+			<nail x="-238" y="-1045"/>
+		</transition>
+		<transition id="id42">
+			<source ref="id37"/>
+			<target ref="id37"/>
+			<label kind="synchronisation" x="-1394" y="-705">InvalidPin?</label>
+			<nail x="-1309" y="-731"/>
+			<nail x="-1309" y="-654"/>
+		</transition>
+		<transition id="id43">
+			<source ref="id32"/>
+			<target ref="id37"/>
+			<label kind="synchronisation" x="-1232" y="-748">InitiatePayment?</label>
+		</transition>
+		<transition id="id44">
+			<source ref="id35"/>
+			<target ref="id35"/>
+			<label kind="synchronisation" x="-748" y="-527">IncorrectPassword!</label>
+			<nail x="-724" y="-531"/>
+			<nail x="-622" y="-531"/>
+		</transition>
+		<transition id="id45">
+			<source ref="id33"/>
+			<target ref="id36"/>
+			<label kind="synchronisation" x="-588" y="-786">SignOutUser?</label>
+		</transition>
+		<transition id="id46">
+			<source ref="id35"/>
+			<target ref="id31"/>
+			<label kind="synchronisation" x="-867" y="-654">CorrectPassword!</label>
+		</transition>
+		<transition id="id47">
+			<source ref="id36"/>
+			<target ref="id35"/>
+			<label kind="synchronisation" x="-630" y="-617">SignIn?</label>
+		</transition>
+		<transition id="id48">
+			<source ref="id34"/>
+			<target ref="id30"/>
+			<label kind="synchronisation" x="-1054" y="-668">Platinum?</label>
+		</transition>
+		<transition id="id49">
+			<source ref="id34"/>
+			<target ref="id32"/>
+			<label kind="synchronisation" x="-1037" y="-744">Gold?</label>
+		</transition>
+		<transition id="id50">
+			<source ref="id31"/>
+			<target ref="id33"/>
+			<label kind="synchronisation" x="-773" y="-757">MemberShipDetails?</label>
+		</transition>
+		<transition id="id51">
+			<source ref="id31"/>
+			<target ref="id34"/>
+			<label kind="synchronisation" x="-926" y="-688">BuyMemberShip?</label>
+		</transition>
+	</template>
+	<template>
+		<name>Bank</name>
+		<location id="id52" x="-620" y="-110">
+			<name x="-654" y="-144">Idle</name>
+		</location>
+		<location id="id53" x="-433" y="-110">
+			<name x="-492" y="-93">PaymentGateway</name>
+		</location>
+		<location id="id54" x="-76" y="-110">
+			<name x="-59" y="-119">InsufficientBal</name>
+		</location>
+		<location id="id55" x="-263" y="-110">
+			<name x="-297" y="-144">Validated</name>
+		</location>
+		<init ref="id52"/>
+		<transition id="id56">
+			<source ref="id53"/>
+			<target ref="id52"/>
+			<label kind="guard" x="-560" y="-68">x&gt;=3</label>
+			<label kind="synchronisation" x="-560" y="-51">TimedOut!</label>
+			<label kind="assignment" x="-560" y="-34">x:=0</label>
+			<nail x="-433" y="-34"/>
+			<nail x="-578" y="-34"/>
+		</transition>
+		<transition id="id57">
+			<source ref="id55"/>
+			<target ref="id52"/>
+			<label kind="synchronisation" x="-535" y="17">SufficientBalance!</label>
+			<nail x="-263" y="34"/>
+			<nail x="-620" y="34"/>
+			<nail x="-620" y="34"/>
+		</transition>
+		<transition id="id58">
+			<source ref="id55"/>
+			<target ref="id54"/>
+			<label kind="synchronisation" x="-245" y="-127">InsufficientBalance!</label>
+		</transition>
+		<transition id="id59">
+			<source ref="id53"/>
+			<target ref="id55"/>
+			<label kind="guard" x="-415" y="-144">x&lt;3</label>
+			<label kind="synchronisation" x="-415" y="-127">ValidPIN!</label>
+			<label kind="assignment" x="-415" y="-110">x:=0</label>
+			<nail x="-323" y="-110"/>
+		</transition>
+		<transition id="id60">
+			<source ref="id54"/>
+			<target ref="id52"/>
+			<label kind="synchronisation" x="-459" y="-314">SignOut?</label>
+			<nail x="-76" y="-297"/>
+			<nail x="-620" y="-297"/>
+		</transition>
+		<transition id="id61">
+			<source ref="id53"/>
+			<target ref="id53"/>
+			<label kind="guard" x="-457" y="-195">x&lt;3</label>
+			<label kind="synchronisation" x="-484" y="-178">InvalidPin!</label>
+			<label kind="assignment" x="-467" y="-161">x:=x+1</label>
+			<nail x="-407" y="-161"/>
+			<nail x="-475" y="-161"/>
+		</transition>
+		<transition id="id62">
+			<source ref="id52"/>
+			<target ref="id53"/>
+			<label kind="synchronisation" x="-602" y="-127">InitiatePayment?</label>
+		</transition>
+	</template>
+	<system>// Place template instantiations here.
+U1=User();
+L1=Library();
+B1=Bank();
+// List one or more processes to be composed into a system.
+system U1,L1,B1;
+</system>
+	<queries>
+		<query>
+			<formula>A&lt;&gt; U1.TransactionCompleted imply U1.Idle</formula>
+			<comment/>
+			<result outcome="success" type="quality" timestamp="2023-11-30 22:54:19 +0530">
+			</result>
+		</query>
+		<query>
+			<formula>A[] not deadlock</formula>
+			<comment/>
+			<result outcome="success" type="quality" timestamp="2023-11-30 22:54:15 +0530">
+			</result>
+		</query>
+		<query>
+			<formula>A&lt;&gt; U1.SignsIn imply U1.Idle</formula>
+			<comment/>
+			<result outcome="success" type="quality" timestamp="2023-11-30 22:54:17 +0530">
+			</result>
+		</query>
+	</queries>
+</nta>
